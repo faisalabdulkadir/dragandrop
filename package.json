@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "typescript": "^5.7.2"
+  },
+  "scripts": {
+    "start": "live-server"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.2.2"
+  }
+}
