@@ -56,6 +56,37 @@ function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
   return adjDescriptor;
 }
 
+//Project state Management
+class ProjectState {
+  private projects: any[] = [];
+  private static instance: ProjectState;
+
+  private constructor() {}
+
+  static getProjectState() {
+    if (this.instance) {
+      return this.instance;
+    }
+    this.instance = new ProjectState();
+    return this.instance;
+  }
+  public addProject(
+    title: string,
+    description: string,
+    numberOfPeople: number
+  ) {
+    const newProject = {
+      id: Math.random().toString(),
+      title,
+      description,
+      people: numberOfPeople,
+    };
+    this.projects.push(newProject);
+  }
+}
+
+const projectState = ProjectState.getProjectState();
+
 //Project List class
 class ProjectList {
   templateElement: HTMLTemplateElement;
