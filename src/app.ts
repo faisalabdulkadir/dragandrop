@@ -56,6 +56,41 @@ function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
   return adjDescriptor;
 }
 
+//Project List class
+class ProjectList {
+  templateElement: HTMLTemplateElement;
+  hostElement: HTMLDivElement;
+  htmlElement: HTMLElement;
+
+  constructor(private type: "active" | "finished") {
+    this.templateElement = document.getElementById(
+      "project-list"
+    )! as HTMLTemplateElement;
+    this.hostElement = document.getElementById("app")! as HTMLDivElement;
+
+    const importedNode = document.importNode(
+      this.templateElement.content,
+      true
+    );
+    this.htmlElement = importedNode.firstElementChild as HTMLElement;
+    this.htmlElement.id = `${this.type}-projects`;
+
+    this.attach();
+    this.renderContent();
+  }
+
+  private renderContent() {
+    const listId = `${this.type}-project-lists`;
+    this.htmlElement.querySelector("ul")!.id = listId;
+    this.htmlElement.querySelector("h2")!.textContent =
+      `${this.type} PROJECTS`.toUpperCase();
+  }
+
+  private attach() {
+    this.hostElement.insertAdjacentElement("beforeend", this.htmlElement);
+  }
+}
+
 //Project Input class
 class ProjectInput {
   templateElement: HTMLTemplateElement;
@@ -75,8 +110,8 @@ class ProjectInput {
       this.templateElement.content,
       true
     );
-    this.htmlElement = importedNode.querySelector("form") as HTMLFormElement;
-    this.htmlElement.id = "user-input";
+    this.htmlElement = importedNode.firstElementChild as HTMLFormElement;
+    this.htmlElement.id = ``;
 
     this.titleInputElement = this.htmlElement.querySelector(
       "#title"
@@ -110,7 +145,7 @@ class ProjectInput {
       value: enteredPeople,
       required: true,
       min: 1,
-      max: 5
+      max: 5,
     };
 
     if (
@@ -152,3 +187,5 @@ class ProjectInput {
 }
 
 const projInput = new ProjectInput();
+const activePrjList = new ProjectList("active");
+const finishedPrjList = new ProjectList("finished");
